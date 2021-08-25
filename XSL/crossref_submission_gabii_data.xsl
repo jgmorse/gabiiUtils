@@ -1,17 +1,19 @@
-<!-- Assumes an XML export formatted like Native SQLite Manager, e.g.
-<foo>
-  <bar>
-    <RECORD>
-      <FIELD1/>
-      <FIELD2/>
-    </RECORD>
-  </bar>
-<foo>
- -->
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:transform xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:date="http://exslt.org/dates-and-times" xmlns:doc="http://exslt.org/common" version="1.0" extension-element-prefixes="date doc">
   <xsl:output method="xml" encoding="utf-8" omit-xml-declaration="yes" indent="yes"/>
   <xsl:strip-space elements="*"/>
+
+  <!-- Assumes an XML export formatted like Native SQLite Manager, e.g.
+  <foo>
+    <bar>
+      <RECORD>
+        <FIELD1/>
+        <FIELD2/>
+      </RECORD>
+    </bar>
+  <foo>
+   -->
+
 
 <xsl:template match="/">
 
