@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:transform xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:date="http://exslt.org/dates-and-times" xmlns:doc="http://exslt.org/common" version="1.0" extension-element-prefixes="date doc">
+<xsl:transform xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:date="http://exslt.org/dates-and-times" xmlns:doc="http://exslt.org/common" version="2.0" extension-element-prefixes="date doc">
   <xsl:output method="xml" encoding="utf-8" omit-xml-declaration="yes" indent="yes"/>
   <xsl:strip-space elements="*"/>
 
@@ -17,12 +17,13 @@
 
 <xsl:template match="/">
 
-<doi_batch xmlns="http://www.crossref.org/schema/4.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3.0" xsi:schemaLocation="http://www.crossref.org/schema/4.3.0 http://www.crossref.org/schema/deposit/crossref4.3.0.xsd">
+<doi_batch xmlns="http://www.crossref.org/schema/4.4.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.4.2" xsi:schemaLocation="http://www.crossref.org/schema/4.4.2 http://www.crossref.org/schema/deposit/crossref4.4.2.xsd">
   <head >
     <doi_batch_id>umpre-backlist-<xsl:value-of select="date:date-time()"/>-submission</doi_batch_id>
-    <timestamp><xsl:value-of select="date:year()"/><xsl:value-of select="date:month-in-year()"/><xsl:value-of select="date:day-in-month()"/><xsl:value-of select="date:hour-in-day()"/><xsl:value-of select="date:minute-in-hour()"/><xsl:value-of select="date:second-in-minute()"/></timestamp>
+        <!-- Have to add an extra digit to the end because of a mistake made in the vol1 deposit, alas-->
+        <timestamp><xsl:value-of select="format-dateTime(current-dateTime(), '[Y0001][M01][D01][H01][m01][s01]')"/>0</timestamp>
     <depositor>
-      <name>scpo</name>
+      <depositor_name>scpo</depositor_name>
       <email_address>mpub.xref@gmail.com</email_address>
     </depositor>
     <registrant>MPublishing</registrant>
@@ -34,27 +35,30 @@
           <person_name contributor_role="editor" sequence="first">
             <given_name>Rachel</given_name>
             <surname>Opitz</surname>
-            <affiliation>University of South Florida</affiliation>
+            <affiliation>University of Glasgow</affiliation>
+            <ORCID>https://orcid.org/0000-0002-5232-1434</ORCID>
           </person_name>
           <person_name contributor_role="editor" sequence="additional">
             <given_name>Marcello</given_name>
             <surname>Mogetta</surname>
             <affiliation>University of Missouri</affiliation>
+            <ORCID>https://orcid.org/0000-0003-2736-3410</ORCID>
           </person_name>
           <person_name contributor_role="editor" sequence="additional">
             <given_name>Nicola</given_name>
             <surname>Terrenato</surname>
             <affiliation>University of Michigan</affiliation>
+            <ORCID>https://orcid.org/0000-0002-1053-0094</ORCID>
           </person_name>
         </contributors>
         <titles>
-          <title>A Mid-Republican House from Gabii - Database</title>
+          <title>Gabii Project Reports Database</title>
         </titles>
-        <description language="en">The database accompanying the digital work A Mid-Republican House from Gabii, DOI: https://doi.org/10.3998/mpub.9231782. Includes complete data for Areas A and B of the Gabii Project, as well as data from all other areas as available at time of publication. The database will be updated as each successive volume of the series is published.</description>
+        <description language="en">A component of the online publication series Gabii Project Reports. Includes complete data for Areas A and B of the Gabii Project, as well as data from all other areas as available at time of publication. The database will be updated as each successive volume of the series is published.</description>
         <database_date>
             <publication_date>
-              <month>12</month>
-              <year>2016</year>
+              <month>10</month>
+              <year>2021</year>
             </publication_date>
         </database_date>
         <publisher>
@@ -73,7 +77,7 @@
 </xsl:template>
 
 <xsl:template match="//RECORD">
-  <dataset xmlns="http://www.crossref.org/schema/4.3.0" dataset_type="record">
+  <dataset xmlns="http://www.crossref.org/schema/4.4.2" dataset_type="record">
     <xsl:variable name="type">
         <xsl:choose>
             <xsl:when test="STRUCT_DESCRIPTION"><xsl:text>SU</xsl:text></xsl:when>
