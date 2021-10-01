@@ -82,6 +82,7 @@
         <xsl:choose>
             <xsl:when test="STRUCT_DESCRIPTION"><xsl:text>SU</xsl:text></xsl:when>
             <xsl:when test="SF_DESCRIPTION"><xsl:text>SF</xsl:text></xsl:when>
+            <xsl:when test="FEATURE_TYPE"><xsl:text>F</xsl:text></xsl:when>
             <xsl:otherwise><xsl:text>SD</xsl:text></xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -90,6 +91,7 @@
           <xsl:when test="$type='SU'">Stratigraphic Unit </xsl:when>
           <xsl:when test="$type='SF'">Special Find </xsl:when>
           <xsl:when test="$type='SD'">Spot Date </xsl:when>
+          <xsl:when test="$type='F'">Feature </xsl:when>
         </xsl:choose>
 	<xsl:value-of select="ID"/>
       </title></titles>
@@ -100,6 +102,7 @@
             <xsl:when test="$type='SU'">stratigraphic_unit</xsl:when>
             <xsl:when test="$type='SF'">special_find</xsl:when>
             <xsl:when test="$type='SD'">spot_date</xsl:when>
+            <xsl:when test="$type='F'">feature</xsl:when>
           </xsl:choose>
         </xsl:attribute>
         <xsl:value-of select="ID"/>
@@ -128,6 +131,16 @@
         </xsl:if> -->
       </description>
     </xsl:if>
+    <xsl:if test="$type='F'">
+      <description language="en">
+        <xsl:if test="not(FEATURE_TYPE='')">
+          Type: <xsl:value-of select="FEATURE_TYPE"/>
+        </xsl:if>
+        <xsl:if test="not(FEATURE_DESC='')">
+          Description: <xsl:value-of select="FEATURE_DESC"/>
+        </xsl:if>
+      </description>
+    </xsl:if>
     <xsl:if test="$type='SD' and not(SD_START='')">
       <description language="en">
         Spot Date Range: <xsl:value-of select="SD_START"/> <xsl:value-of select="SD_START_SUFFIX"/> - <xsl:value-of select="SD_END"/> <xsl:value-of select="SD_END_SUFFIX"/>
@@ -139,7 +152,7 @@
     <doi_data>
         <doi>
           <xsl:text>10.3998/gabii.1.</xsl:text>
-          <xsl:if test="$type='SF' or $type='SD'"><xsl:value-of select="$type"/></xsl:if>
+          <xsl:if test="$type='SF' or $type='SD' or $type='F'"><xsl:value-of select="$type"/></xsl:if>
           <xsl:value-of select="ID"/>
         </doi>
         <resource>
@@ -148,6 +161,7 @@
             <xsl:when test="$type='SU'">stratigraphic_units</xsl:when>
             <xsl:when test="$type='SF'">special_finds</xsl:when>
             <xsl:when test="$type='SD'">spot_dates</xsl:when>
+            <xsl:when test="$type='F'">features</xsl:when>
           </xsl:choose>
         <xsl:text>/</xsl:text>
         <xsl:value-of select="ID"/>
